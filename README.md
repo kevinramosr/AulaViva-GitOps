@@ -1,4 +1,5 @@
 
+
 # AulaViva GitOps
 
 Repositorio para gestionar los manifiestos Kubernetes de AulaViva
