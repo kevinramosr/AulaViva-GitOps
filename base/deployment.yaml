@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aulaviva-api
+  labels:
+    app: aulaviva-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aulaviva-api
+  template:
+    metadata:
+      labels:
+        app: aulaviva-api
+    spec:
+      containers:
+        - name: aulaviva-api
+          image: ghcr.io/kulkatpop/aulaviva-api:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
