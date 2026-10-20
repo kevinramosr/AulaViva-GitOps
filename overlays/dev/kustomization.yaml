@@ -1,6 +1,15 @@
-
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: aulaviva-dev
+
 resources:
   - ../../base
+
+images:
+  - name: ghcr.io/kulkatpop/aulaviva-api
+    newTag: latest
+
+replicas:
+  - name: aulaviva-api
+    count: 1
