@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: aulaviva-api
-          image: image:nginx:alpine
+          image: nginx:alpine
           ports:
             - containerPort: 80
           resources:
