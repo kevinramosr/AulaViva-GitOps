@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: aulaviva-api
-          image: ghcr.io/kulkatpop/aulaviva-api:latest
+          image: image: nginx:alpine
           ports:
             - containerPort: 80
           resources:
