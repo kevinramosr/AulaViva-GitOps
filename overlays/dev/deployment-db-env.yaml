@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aulaviva-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: aulaviva-api
+          env:
+            - name: DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-db
+                  key: DB_DSN
+                  optional: false
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-db
+                  key: DB_USER
+                  optional: false
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-db
+                  key: DB_PASSWORD
+                  optional: false
