@@ -16,3 +16,5 @@ spec:
               value: qwen3:1.7b
             - name: OLLAMA_ALLOW_DOCKER_HOST
               value: "true"
+            - name: TUTOR_AI_TIMEOUT_SECONDS
+              value: "60"
