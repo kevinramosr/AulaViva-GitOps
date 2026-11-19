@@ -8,7 +8,7 @@ resources:
 
 images:
   - name: ghcr.io/kulkatpop/aulaviva-api
-    newTag: 5cadcaf59058a62a551ef1553205ce3485d65c76
+    newTag: 5c9da1d0157593666c77fdcd6f9789d8076d39f9
 
 replicas:
   - name: aulaviva-api
