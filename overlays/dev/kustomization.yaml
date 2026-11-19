@@ -9,7 +9,7 @@ resources:
 images:
   - name: nginx
     newName: ghcr.io/kulkatpop/aulaviva-api
-    newTag: 5c9da1d0157593666c77fdcd6f9789d8076d39f9
+    newTag: 578a96e3753c60fbac97b7e7fbebaac7ff0cc190
 
 replicas:
   - name: aulaviva-api
@@ -17,3 +17,4 @@ replicas:
 
 patches:
   - path: deployment-db-env.yaml
+  - path: deployment-ollama-env.yaml

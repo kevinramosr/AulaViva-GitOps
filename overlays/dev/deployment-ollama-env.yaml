@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aulaviva-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: aulaviva-api
+          env:
+            - name: OLLAMA_BASE_URL
+              value: http://host.docker.internal:11434
+            - name: OLLAMA_EMBEDDING_MODEL
+              value: nomic-embed-text
+            - name: OLLAMA_CHAT_MODEL
+              value: qwen3:1.7b
+            - name: OLLAMA_ALLOW_DOCKER_HOST
+              value: "true"
