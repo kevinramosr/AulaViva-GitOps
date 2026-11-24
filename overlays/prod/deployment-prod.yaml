@@ -8,9 +8,29 @@ spec:
   template:
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 33
+        runAsGroup: 33
+        runAsNonRoot: true
+        fsGroup: 33
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: aulaviva-api
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
           env:
+            - name: APACHE_RUN_DIR
+              value: /tmp/apache2
+            - name: APACHE_PID_FILE
+              value: /tmp/apache2/apache2.pid
+            - name: APACHE_LOCK_DIR
+              value: /tmp/apache2-lock
             - name: DB_DSN
               valueFrom:
                 secretKeyRef:
@@ -39,6 +59,8 @@ spec:
             - name: TUTOR_AI_TIMEOUT_SECONDS
               value: "60"
           volumeMounts:
+            - name: tmp
+              mountPath: /tmp
             - name: db-ca
               mountPath: /etc/aulaviva/postgresql-ca
               readOnly: true
@@ -66,6 +88,9 @@ spec:
               cpu: "500m"
               memory: "384Mi"
       volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
         - name: db-ca
           secret:
             secretName: aulaviva-prod-db-ca
