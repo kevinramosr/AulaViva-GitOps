@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aulaviva-api
+spec:
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: aulaviva-api
+          env:
+            - name: DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-prod-db
+                  key: DB_DSN
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-prod-db
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: aulaviva-prod-db
+                  key: DB_PASSWORD
+            - name: PGSSLROOTCERT
+              value: /etc/aulaviva/postgresql-ca/ca.crt
+            - name: OLLAMA_BASE_URL
+              value: http://host.docker.internal:11434
+            - name: OLLAMA_EMBEDDING_MODEL
+              value: nomic-embed-text
+            - name: OLLAMA_CHAT_MODEL
+              value: qwen3:1.7b
+            - name: OLLAMA_ALLOW_DOCKER_HOST
+              value: "true"
+            - name: TUTOR_AI_TIMEOUT_SECONDS
+              value: "60"
+          volumeMounts:
+            - name: db-ca
+              mountPath: /etc/aulaviva/postgresql-ca
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /health/live.php
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health/ready.php
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "384Mi"
+      volumes:
+        - name: db-ca
+          secret:
+            secretName: aulaviva-prod-db-ca
+            defaultMode: 292
+            items:
+              - key: ca.crt
+                path: ca.crt

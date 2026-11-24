@@ -5,11 +5,16 @@ namespace: aulaviva-prod
 
 resources:
   - ../../base
+  - namespace.yaml
 
 images:
-  - name: ghcr.io/kulkatpop/aulaviva-api
-    newTag: latest
+  - name: nginx
+    newName: ghcr.io/kulkatpop/aulaviva-api
+    digest: sha256:3c1aef5217470e0e74368de2bfa36f6be66fed931cc79a65a0c8fbb33b379850
 
 replicas:
   - name: aulaviva-api
-    count: 2
+    count: 1
+
+patches:
+  - path: deployment-prod.yaml
