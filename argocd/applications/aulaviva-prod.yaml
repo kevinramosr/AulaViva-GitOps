@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aulaviva-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kevinramosr/AulaViva-GitOps.git
+    targetRevision: main
+    path: overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: aulaviva-prod
+  # Manual sync: no automated pruning or self-heal for the first deployment.
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true
