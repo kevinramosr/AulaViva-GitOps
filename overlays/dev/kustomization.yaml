@@ -9,7 +9,7 @@ resources:
 images:
   - name: nginx
     newName: ghcr.io/kulkatpop/aulaviva-api
-    digest: sha256:22042e6ee9e51843943d210e8593505f2f33c9aeca8e88cc25e77286fda82600
+    digest: sha256:b04ef7669a0bfce6fc299ea4eadc731f9f88b16e15878db90e226273125c330e
 
 replicas:
   - name: aulaviva-api
